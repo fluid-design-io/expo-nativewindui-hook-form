@@ -1,0 +1,40 @@
+{
+  "cesVersion": "2.11.24",
+  "projectName": "expo-nativewindui-hook-form",
+  "packages": [
+    {
+      "name": "expo-router",
+      "type": "navigation",
+      "options": {
+        "type": "stack"
+      }
+    },
+    {
+      "name": "nativewindui",
+      "type": "styling",
+      "options": {
+        "selectedComponents": [
+          "text"
+        ]
+      }
+    }
+  ],
+  "flags": {
+    "noGit": false,
+    "noInstall": false,
+    "overwrite": false,
+    "importAlias": true,
+    "packageManager": "pnpm",
+    "eas": false
+  },
+  "packageManager": {
+    "type": "pnpm",
+    "version": "8.9.2"
+  },
+  "os": {
+    "type": "Darwin",
+    "platform": "darwin",
+    "arch": "arm64",
+    "kernelVersion": "23.6.0"
+  }
+}
