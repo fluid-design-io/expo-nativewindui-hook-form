@@ -20,6 +20,9 @@ dependencies:
   '@react-navigation/native':
     specifier: ^6.1.7
     version: 6.1.18(react-native@0.74.5)(react@18.2.0)
+  '@rn-primitives/slot':
+    specifier: ^1.0.4
+    version: 1.0.4(react-native-web@0.19.12)(react-native@0.74.5)(react@18.2.0)
   '@roninoss/icons':
     specifier: ^0.0.4
     version: 0.0.4(expo@51.0.32)(react-native@0.74.5)(react@18.2.0)
@@ -2957,6 +2960,23 @@ packages:
     resolution: {integrity: sha512-KRJtwrjRV5Bb+pM7zxcTJkhIqWWSy+MYsIxHK+0m5atcznsf15YwUBWHWulZerV2+vvHH1Lp1DD7pw6qKW8SgA==}
     dependencies:
       web-streams-polyfill: 3.3.3
+    dev: false
+
+  /@rn-primitives/slot@1.0.4(react-native-web@0.19.12)(react-native@0.74.5)(react@18.2.0):
+    resolution: {integrity: sha512-sB+5xIY3mzphco3EN2JXQ7F7BAhsx1ufj0eP4EBu1uV45SbuEF7Zjg4czfiYftVc69rrPXpIgyK6dnMAD2/+pw==}
+    peerDependencies:
+      react: '*'
+      react-native: '*'
+      react-native-web: '*'
+    peerDependenciesMeta:
+      react-native:
+        optional: true
+      react-native-web:
+        optional: true
+    dependencies:
+      react: 18.2.0
+      react-native: 0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.25.4)(@types/react@18.2.79)(react@18.2.0)
+      react-native-web: 0.19.12(react-dom@18.2.0)(react@18.2.0)
     dev: false
 
   /@rnx-kit/chromium-edge-launcher@1.0.0:
