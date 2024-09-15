@@ -83,6 +83,9 @@ dependencies:
   react-native-gesture-handler:
     specifier: ~2.16.1
     version: 2.16.2(react-native@0.74.5)(react@18.2.0)
+  react-native-keyboard-controller:
+    specifier: ^1.13.4
+    version: 1.13.4(react-native-reanimated@3.10.1)(react-native@0.74.5)(react@18.2.0)
   react-native-pager-view:
     specifier: 6.3.0
     version: 6.3.0(react-native@0.74.5)(react@18.2.0)
@@ -8175,6 +8178,18 @@ packages:
       react: 18.2.0
       react-fast-compare: 3.2.2
       shallowequal: 1.1.0
+    dev: false
+
+  /react-native-keyboard-controller@1.13.4(react-native-reanimated@3.10.1)(react-native@0.74.5)(react@18.2.0):
+    resolution: {integrity: sha512-80unzD4S+ybgYOluhdeV4zV62ejg6Jt0l5iw7PuA1y3aM1a1+5tS2WoHLNk8605oDaGcVLGNMNF0Qv4GWe97Bg==}
+    peerDependencies:
+      react: '*'
+      react-native: '*'
+      react-native-reanimated: '>=3.0.0'
+    dependencies:
+      react: 18.2.0
+      react-native: 0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.25.4)(@types/react@18.2.79)(react@18.2.0)
+      react-native-reanimated: 3.10.1(@babel/core@7.25.2)(react-native@0.74.5)(react@18.2.0)
     dev: false
 
   /react-native-pager-view@6.3.0(react-native@0.74.5)(react@18.2.0):
