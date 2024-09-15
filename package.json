@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^14.0.0",
+    "@react-native-community/datetimepicker": "8.0.1",
     "@react-navigation/native": "^6.1.7",
     "@roninoss/icons": "^0.0.4",
     "@shopify/flash-list": "1.6.4",

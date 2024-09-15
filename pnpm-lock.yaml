@@ -8,6 +8,9 @@ dependencies:
   '@expo/vector-icons':
     specifier: ^14.0.0
     version: 14.0.2
+  '@react-native-community/datetimepicker':
+    specifier: 8.0.1
+    version: 8.0.1(react-native@0.74.5)(react@18.2.0)
   '@react-navigation/native':
     specifier: ^6.1.7
     version: 6.1.18(react-native@0.74.5)(react@18.2.0)
@@ -2520,6 +2523,21 @@ packages:
       - encoding
       - supports-color
       - utf-8-validate
+    dev: false
+
+  /@react-native-community/datetimepicker@8.0.1(react-native@0.74.5)(react@18.2.0):
+    resolution: {integrity: sha512-4BO0t3geMNNw9cIIm9p9FNUzwMXexdzD4pAH0AaUAycs3BS71HLrX8jHbrI7nzq/+8O7cLAXn5Gudte+YpTV8Q==}
+    peerDependencies:
+      react: '*'
+      react-native: '*'
+      react-native-windows: '*'
+    peerDependenciesMeta:
+      react-native-windows:
+        optional: true
+    dependencies:
+      invariant: 2.2.4
+      react: 18.2.0
+      react-native: 0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.25.4)(@types/react@18.2.79)(react@18.2.0)
     dev: false
 
   /@react-native/assets-registry@0.74.87:
