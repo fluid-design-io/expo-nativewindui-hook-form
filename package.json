@@ -16,6 +16,7 @@
     "@react-native-community/datetimepicker": "8.0.1",
     "@react-native-picker/picker": "2.7.5",
     "@react-navigation/native": "^6.1.7",
+    "@rn-primitives/hooks": "^1.0.4",
     "@rn-primitives/slot": "^1.0.4",
     "@roninoss/icons": "^0.0.4",
     "@shopify/flash-list": "1.6.4",

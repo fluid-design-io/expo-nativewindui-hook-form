@@ -20,6 +20,9 @@ dependencies:
   '@react-navigation/native':
     specifier: ^6.1.7
     version: 6.1.18(react-native@0.74.5)(react@18.2.0)
+  '@rn-primitives/hooks':
+    specifier: ^1.0.4
+    version: 1.0.4(react-native-web@0.19.12)(react-native@0.74.5)(react@18.2.0)
   '@rn-primitives/slot':
     specifier: ^1.0.4
     version: 1.0.4(react-native-web@0.19.12)(react-native@0.74.5)(react@18.2.0)
@@ -2965,8 +2968,43 @@ packages:
       web-streams-polyfill: 3.3.3
     dev: false
 
+  /@rn-primitives/hooks@1.0.4(react-native-web@0.19.12)(react-native@0.74.5)(react@18.2.0):
+    resolution: {integrity: sha512-Q9Xey5qxM/LyfUnRbCae0BPnuaN2GT9UTTaqA5Lhpren8oVmm5TadjqkUjjcIYTq4G3hKeqQI7t+QzfbGU4JFQ==}
+    peerDependencies:
+      react: '*'
+      react-native: '*'
+      react-native-web: '*'
+    peerDependenciesMeta:
+      react-native:
+        optional: true
+      react-native-web:
+        optional: true
+    dependencies:
+      '@rn-primitives/types': 1.0.4(react-native-web@0.19.12)(react-native@0.74.5)(react@18.2.0)
+      react: 18.2.0
+      react-native: 0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.25.4)(@types/react@18.2.79)(react@18.2.0)
+      react-native-web: 0.19.12(react-dom@18.2.0)(react@18.2.0)
+    dev: false
+
   /@rn-primitives/slot@1.0.4(react-native-web@0.19.12)(react-native@0.74.5)(react@18.2.0):
     resolution: {integrity: sha512-sB+5xIY3mzphco3EN2JXQ7F7BAhsx1ufj0eP4EBu1uV45SbuEF7Zjg4czfiYftVc69rrPXpIgyK6dnMAD2/+pw==}
+    peerDependencies:
+      react: '*'
+      react-native: '*'
+      react-native-web: '*'
+    peerDependenciesMeta:
+      react-native:
+        optional: true
+      react-native-web:
+        optional: true
+    dependencies:
+      react: 18.2.0
+      react-native: 0.74.5(@babel/core@7.25.2)(@babel/preset-env@7.25.4)(@types/react@18.2.79)(react@18.2.0)
+      react-native-web: 0.19.12(react-dom@18.2.0)(react@18.2.0)
+    dev: false
+
+  /@rn-primitives/types@1.0.4(react-native-web@0.19.12)(react-native@0.74.5)(react@18.2.0):
+    resolution: {integrity: sha512-pp5H+IFrZym52/ZKMXUV4YUViX1yLBlSh4DfUgwxOAICOLKThbEXbEEinm0C3NSRzqXLmD/zJZI4pAGlh1J5iA==}
     peerDependencies:
       react: '*'
       react-native: '*'
