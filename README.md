@@ -90,5 +90,3 @@ https://github.com/user-attachments/assets/a14317f9-2c62-4242-a32a-e55375154cd3
    ```
    The `handleSubmit` function from react-hook-form is used to process the form data on submission.
 
-This setup allows for a clean separation of form logic and UI components while providing automatic error handling and validation.
-
