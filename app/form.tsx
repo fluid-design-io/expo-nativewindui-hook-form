@@ -99,11 +99,7 @@ export default function SignupScreen() {
   };
 
   return (
-    <View
-      className="ios:bg-card flex-1"
-      style={{
-        paddingBottom: insets.bottom,
-      }}>
+    <View className="ios:bg-card flex-1">
       <Stack.Screen
         options={{
           title: 'Form',
@@ -113,7 +109,7 @@ export default function SignupScreen() {
               disabled={isSubmitting}
               variant="plain"
               onPress={insertValidData}>
-              <Text className="text-primary">Insert Data</Text>
+              <Text className="text-primary">Insert</Text>
             </Button>
           ),
         }}
@@ -130,10 +126,20 @@ export default function SignupScreen() {
                 ios={{ title: 'Personal Information' }}
                 fields={pickFields(form, ['firstName', 'lastName'])}>
                 <FormItem>
-                  <FormTextField name="firstName" placeholder="First Name" returnKeyType="next" />
+                  <FormTextField
+                    name="firstName"
+                    placeholder="First Name"
+                    returnKeyType="next"
+                    label="First Name"
+                  />
                 </FormItem>
                 <FormItem>
-                  <FormTextField name="lastName" placeholder="Last Name" returnKeyType="next" />
+                  <FormTextField
+                    name="lastName"
+                    placeholder="Last Name"
+                    returnKeyType="next"
+                    label="Last Name"
+                  />
                 </FormItem>
               </FormSection>
 
@@ -169,6 +175,7 @@ export default function SignupScreen() {
                   <FormTextField
                     name="email"
                     placeholder="Email"
+                    label="Email"
                     keyboardType="email-address"
                     textContentType="emailAddress"
                     autoComplete="email"
@@ -186,6 +193,7 @@ export default function SignupScreen() {
                   <FormTextField
                     name="password"
                     placeholder="Password"
+                    label="Password"
                     textContentType="newPassword"
                     secureTextEntry
                     returnKeyType="next"
@@ -195,6 +203,7 @@ export default function SignupScreen() {
                   <FormTextField
                     name="confirmPassword"
                     placeholder="Confirm Password"
+                    label="Confirm Password"
                     textContentType="newPassword"
                     secureTextEntry
                     returnKeyType="done"
@@ -217,7 +226,8 @@ export default function SignupScreen() {
                           backgroundColor: 'transparent',
                         }}
                         selectedValue={value}
-                        onValueChange={onChange}>
+                        onValueChange={onChange}
+                        placeholder="Select your lucky number">
                         {Array.from({ length: 10 }, (_, i) => (
                           <PickerItem key={i} label={i.toString()} value={i} />
                         ))}
@@ -235,7 +245,7 @@ export default function SignupScreen() {
         offset={{
           closed: 0,
           opened: Platform.select({
-            ios: insets.bottom,
+            ios: insets.bottom + 48,
             default: insets.bottom,
           }),
         }}
@@ -249,10 +259,13 @@ export default function SignupScreen() {
           </View>
         ) : (
           <View className="flex-row justify-between py-4 pl-6 pr-8">
+            <Button onPress={insertValidData} variant="tonal">
+              <Text className="text-sm">Insert</Text>
+            </Button>
             <Button
               onPress={() => {
                 KeyboardController.dismiss();
-                handleSubmit(onSubmit);
+                handleSubmit(onSubmit)();
               }}
               disabled={!isDirty || isSubmitting}>
               {isSubmitting ? <ActivityIndicator color="white" /> : null}

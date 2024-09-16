@@ -248,7 +248,7 @@ const FormTextField = ({ name, placeholder, label, ...props }: FormTextFieldProp
           blurOnSubmit={false}
           onChangeText={onChange}
           onBlur={onBlur}
-          errorMessage={error ? error.message : undefined}
+          errorMessage={error ? (error.message ?? 'Unknown error') : undefined}
           onSubmitEditing={() => {
             if (props.returnKeyType === 'next') {
               KeyboardController.setFocusTo('next');
