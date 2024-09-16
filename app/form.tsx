@@ -103,13 +103,14 @@ export default function SignupScreen() {
       <Stack.Screen
         options={{
           title: 'Form',
+          headerShown: true,
           headerRight: () => (
             <Button
               className="ios:px-0"
               disabled={isSubmitting}
               variant="plain"
               onPress={insertValidData}>
-              <Text className="text-primary">Insert</Text>
+              <Text className="text-primary">Insert Data</Text>
             </Button>
           ),
         }}
@@ -258,10 +259,7 @@ export default function SignupScreen() {
             </Button>
           </View>
         ) : (
-          <View className="flex-row justify-between py-4 pl-6 pr-8">
-            <Button onPress={insertValidData} variant="tonal">
-              <Text className="text-sm">Insert</Text>
-            </Button>
+          <View className="flex-row justify-end py-4 pl-6 pr-8">
             <Button
               onPress={() => {
                 KeyboardController.dismiss();
