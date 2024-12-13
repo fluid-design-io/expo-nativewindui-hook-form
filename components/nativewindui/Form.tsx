@@ -1,22 +1,18 @@
 import type { IconProps } from '@roninoss/icons';
-import type { TextInput, ViewProps, ViewStyle } from 'react-native';
+import { Icon } from '@roninoss/icons';
 import * as React from 'react';
+import type { UseFormReturn } from 'react-hook-form';
+import { Controller, FormProvider, useFormContext, useFormState } from 'react-hook-form';
+import type { TextInput, ViewProps, ViewStyle } from 'react-native';
 import { Platform, View } from 'react-native';
 import { KeyboardController } from 'react-native-keyboard-controller';
-import { Icon } from '@roninoss/icons';
-import {
-  Controller,
-  FormProvider,
-  useFormContext,
-  UseFormReturn,
-  useFormState,
-} from 'react-hook-form';
+
+import { TextField } from './TextField';
+import type { TextFieldProps } from './TextField/types';
 
 import { Text } from '~/components/nativewindui/Text';
 import { cn } from '~/lib/cn';
 import { useColorScheme } from '~/lib/useColorScheme';
-import { TextField } from './TextField';
-import { TextFieldProps } from './TextField/types';
 
 type FormProps = ViewProps & {
   form: UseFormReturn<any>;
@@ -30,8 +26,8 @@ const Form = React.forwardRef<View, FormProps>(({ className, form, children, ...
     const fieldNames = Object.keys(errors);
     if (fieldNames.length > 0) {
       const firstErrorField = fieldNames[0];
-      const ref = inputRefs.current[firstErrorField as string];
-      if (ref && ref.current) {
+      const ref = inputRefs.current[firstErrorField!];
+      if (ref?.current) {
         ref.current.focus();
       }
     }
@@ -97,25 +93,21 @@ const FormSection = React.forwardRef<React.ElementRef<typeof View>, FormSectionP
   ) => {
     const { colors } = useColorScheme();
 
-    // Process children if needed (e.g., adding 'isLast' prop on iOS)
     const children = React.useMemo(() => {
+      if (Platform.OS !== 'ios') return childrenProps;
       const childrenArray = React.Children.toArray(childrenProps);
-
-      const processedChildren = childrenArray.map((child, index) => {
+      // Add isLast prop to last child
+      return React.Children.map(childrenArray, (child, index) => {
         if (!React.isValidElement(child)) return child;
-
-        if (Platform.OS === 'ios') {
-          const isLast = index === childrenArray.length - 1;
-          return React.cloneElement(typeof child === 'string' ? <></> : child, {
-            isLast,
-            key: child.key ?? `FormItem-${index}`,
-          });
+        const isLast = index === childrenArray.length - 1;
+        if (typeof child === 'string') {
+          console.log('FormSection - Invalid asChild element', child);
         }
-
-        return child;
+        return React.cloneElement<ViewProps & { isLast?: boolean }, View>(
+          typeof child === 'string' ? <></> : child,
+          { isLast }
+        );
       });
-
-      return Platform.OS === 'ios' ? processedChildren : childrenProps;
     }, [childrenProps]);
 
     return (
@@ -128,7 +120,7 @@ const FormSection = React.forwardRef<React.ElementRef<typeof View>, FormSectionP
         {Platform.OS === 'ios' && !!ios?.title && (
           <Text
             variant="footnote"
-            className={cn('pb-1 pl-3 uppercase text-muted-foreground', ios.titleClassName)}>
+            className={cn('pb-1 pl-3 uppercase text-muted-foreground', ios?.titleClassName)}>
             {ios.title}
           </Text>
         )}
@@ -137,6 +129,7 @@ const FormSection = React.forwardRef<React.ElementRef<typeof View>, FormSectionP
             <Icon color={colors.grey} size={24} {...(materialIconProps as IconProps<'material'>)} />
           </View>
         )}
+
         <View
           ref={ref}
           className={cn(
@@ -144,9 +137,9 @@ const FormSection = React.forwardRef<React.ElementRef<typeof View>, FormSectionP
             className
           )}
           style={style}
-          {...props}>
-          {children}
-        </View>
+          children={children}
+          {...props}
+        />
         <FormSectionFootnote
           footnote={footnote}
           fields={fields}
@@ -163,14 +156,15 @@ const FormSectionFootnote = (props: {
   footnoteClassName?: string;
 }) => {
   const { errors } = useFormState();
-  const errorMessages = props.fields?.map((field) => errors[field]?.message).filter(Boolean) ?? [];
+  const errorMessages =
+    props.fields?.map((field) => getNestedValue(errors, field)?.message).filter(Boolean) ?? [];
 
-  const footnote = errorMessages.length > 0 ? errorMessages[0] : null;
+  const footnote = errorMessages.length > 0 ? errorMessages[0] : props.footnote;
   if (!footnote) return null;
   return (
     <Text
       className={cn(
-        'ios:pl-3 ios:pt-1 pl-3 pt-0.5',
+        'ios:pt-1 pl-3 pt-0.5',
         errorMessages.length > 0 ? 'text-destructive' : 'text-muted-foreground',
         props.footnoteClassName
       )}
@@ -201,17 +195,18 @@ const FormItem = React.forwardRef<
   );
 });
 
-type InputRefs = {
-  [key: string]: React.RefObject<any>;
-};
+type InputRefs = Record<string, React.RefObject<any>>;
 
 interface FormTextFieldProps extends TextFieldProps {
   name: string;
   inputRef?: React.RefObject<TextInput>;
+  ios?: {
+    hideLabel?: boolean;
+  };
 }
 const InputRefsContext = React.createContext<InputRefs | null>(null);
 
-const FormTextField = ({ name, placeholder, label, ...props }: FormTextFieldProps) => {
+const FormTextField = ({ name, placeholder, label, ios, ...props }: FormTextFieldProps) => {
   const { control, formState } = useFormContext();
   const { isSubmitting } = formState;
   const inputRef = React.useRef<TextInput>(null);
@@ -233,7 +228,7 @@ const FormTextField = ({ name, placeholder, label, ...props }: FormTextFieldProp
     <Controller
       control={control}
       name={name}
-      render={({ field: { onChange, onBlur, value, disabled }, fieldState: { error } }) => (
+      render={({ field: { onChange, value, disabled }, fieldState: { error } }) => (
         <TextField
           ref={inputRef}
           value={value}
@@ -245,9 +240,11 @@ const FormTextField = ({ name, placeholder, label, ...props }: FormTextFieldProp
             ios: undefined,
             default: label,
           })}
-          blurOnSubmit={false}
+          leftView={Platform.select({
+            default: undefined,
+            ios: ios?.hideLabel ? undefined : <LeftLabel label={label ?? ''} />,
+          })}
           onChangeText={onChange}
-          onBlur={onBlur}
           errorMessage={error ? (error.message ?? 'Unknown error') : undefined}
           onSubmitEditing={() => {
             if (props.returnKeyType === 'next') {
@@ -261,6 +258,17 @@ const FormTextField = ({ name, placeholder, label, ...props }: FormTextFieldProp
     />
   );
 };
+
+/**
+ * iOS only, default to `w-32`
+ */
+function LeftLabel({ label, className }: { label: string; className?: string }) {
+  return (
+    <View className={cn('w-32 justify-center pl-2', className)}>
+      <Text className="font-medium">{label}</Text>
+    </View>
+  );
+}
 
 // helper function to pick fields from the form with type safety, essentially a no-op
 /**
@@ -276,5 +284,10 @@ const pickFields = <T extends Record<string, any>>(
   return fields;
 };
 
-export { Form, FormItem, FormSection, FormTextField, pickFields };
-export type { FormProps, FormSectionProps };
+// Utility function to safely access nested properties
+const getNestedValue = (obj: any, path: string) => {
+  return path.split('.').reduce((acc, part) => acc && acc[part], obj);
+};
+
+export { Form, FormItem, FormSection, FormTextField, pickFields, LeftLabel };
+export type { FormProps, FormSectionProps, FormTextFieldProps };
